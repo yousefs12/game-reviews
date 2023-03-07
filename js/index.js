@@ -49,7 +49,7 @@ export function displayData(games) {
 
                     <a href="" class="stretched-link" value="${index}"></a>
 
-                    </div>
+                </div>
             </div>`
 
         container += gameBox;
@@ -59,9 +59,14 @@ export function displayData(games) {
 
     $(".stretched-link").click(async function (e) {
         e.preventDefault();
+        $("#loadingScreen").show();
+        $("body").css("overflow", "hidden");
         await games[$(e.target).attr("value")].getFullData();
         $("#gameDetails").show();
         await games[$(e.target).attr("value")].display($("#gameReview"));
+        $(function () {
+            $("#loadingScreen").hide();
+        });
     });
 }
 
@@ -69,5 +74,5 @@ apiReq();
 
 $("#btnClose").click(function() {
         $("#gameDetails").hide();
-        $("#mainContent").show();
+        $("body").css("overflow", "auto");
     })
